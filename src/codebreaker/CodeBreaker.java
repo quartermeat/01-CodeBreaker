@@ -5,6 +5,7 @@
  */
 package codebreaker;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -34,6 +35,8 @@ public class CodeBreaker {
         Scanner consoleInput = new Scanner(System.in);
 
         boolean gameRunning = true;
+        int numTry = 10;
+
         while (gameRunning) {
             System.out.println("Enter guess: ");
             String input = consoleInput.next();
@@ -48,9 +51,43 @@ public class CodeBreaker {
                         + " the letters of the alphabet and the 10 single digit numbers including 0");
                 System.out.println("The game will then let you know what characters are correctly guessed in the wrong spot,"
                         + " and what characters were guessed correctly in the correct spot.");
-                
+                System.out.println("X = Correct character in the correct location.");
+                System.out.println("O = Correct character in incorrect location.");
+                System.out.println(". = Not a correct character.");
+            } else if (input.equalsIgnoreCase(code.toString())) {
+                System.out.println("Good job! You've cracked the code!");
+                break;
+            } else {
+                char[] clues = new char[5];
+                char[] answer = input.toUpperCase().toCharArray();
 
-            }//end if else if    
+                //fill in the rest of the char array
+                if(answer.length < code.length){
+                    for(int i = answer.length; i < code.length; i++){
+                        answer[i] = '.';
+                    }
+                }
+                
+                for (int i = 0; i < answer.length; i++) {
+
+                    //if it is a correct character in the correct spot
+                    if (answer[i] == code[i]) {
+                        clues[i] = 'X';
+                    } else if (answer.toString().contains(String.valueOf(code[i]))) {
+                        clues[i] = 'O';
+                    } else {
+                        clues[i] = '.';
+                    }//end if/else if/else
+
+                }//end for
+
+                System.out.println("Guess recieved, here are the clues:");
+
+                System.out.println(String.valueOf(clues));
+                
+                Arrays.fill(clues, '*');
+
+            }//end if/else if/esle if/else    
         }//end while
     }//end main
 }//end CodeBreaker
