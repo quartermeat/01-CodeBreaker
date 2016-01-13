@@ -5,7 +5,6 @@
  */
 package codebreaker;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -32,7 +31,7 @@ public class CodeBreaker {
         
         code = new Code();
         for (int i = 0; i < 5; i++) {
-            code.add(new CodeNode(alphabetArray[rand.nextInt(36 + 1)], i));
+            code.add(new CodeNode(alphabetArray[rand.nextInt(36)], i));
         }//end for
         
         System.out.println("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -41,7 +40,7 @@ public class CodeBreaker {
         Scanner consoleInput = new Scanner(System.in);
 
         boolean gameRunning = true;
-        //int numTry = 10;
+        int numTry = 0;
 
         while (gameRunning) {
 
@@ -61,10 +60,23 @@ public class CodeBreaker {
                 System.out.println("X = Correct character in the correct location.");
                 System.out.println("O = Correct character in incorrect location.");
                 System.out.println(". = Not a correct character.");
+            } else if(input.equalsIgnoreCase(code.toString())){
+              
+                System.out.println("Congradulations! You broke the code in " + numTry + " tries.");
+                
             } else {
+                answer = new Code(input.toUpperCase());
+                //for troubleshooting
+                System.out.println("The input is: " + answer);
+                //System.out.println("I see you're a developer in need of assistance; The code is: " + code);
+                                
+                clues = new Code();
+                clues = (Code)code.getClues(answer);
                 
+                System.out.println("The clue is: " + clues);
                 
-            }//end if/else if/esle if/else    
+            }//end if/else if/esle if/else
+            numTry++;
         }//end while
     }//end main
    

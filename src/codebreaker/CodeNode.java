@@ -5,12 +5,14 @@
  */
 package codebreaker;
 
+import java.util.Objects;
+
 
 /**
  *
  * @author jeremy.williamson
  */
-public class CodeNode{
+public class CodeNode extends Object{
     
     public static final Character X = 'X';
     public static final Character O = 'O';
@@ -27,6 +29,26 @@ public class CodeNode{
     
     public Character getCharacter(){
         return assignedCharacter;
+    }
+    
+    public int getIndex(){
+        return index;
+    }
+   
+    @Override
+    public boolean equals(Object otherNode){
+        if(otherNode instanceof CodeNode){
+            CodeNode placeHolder = (CodeNode)otherNode;
+            return placeHolder.getCharacter().equals(assignedCharacter);
+        }else
+            return false;
+    }//end equals
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 31 * hash + Objects.hashCode(this.assignedCharacter);
+        return hash;
     }
     
     

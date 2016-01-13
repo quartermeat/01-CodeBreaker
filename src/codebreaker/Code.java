@@ -18,48 +18,50 @@ public class Code extends ArrayList<CodeNode> {
     public Code() {
         super();
     }
-    
-    public Code(String newCode){
+
+    public Code(String newCode) {
         super();
         char[] newCharArray = newCode.toCharArray();
-        for(int i = 0; i < newCharArray.length; i++){
-            this.add(e)
+        for (int i = 0; i < newCharArray.length; i++) {
+            add(new CodeNode(newCharArray[i], i));
         }
     }
 
-    public ArrayList<CodeNode> getClues(ArrayList<CodeNode> newCode, ArrayList<CodeNode> newGuess) {
+    public Code getClues(ArrayList<CodeNode> newGuess) {
 
-        ArrayList<CodeNode> resultList = new ArrayList<>();
+        Code resultList = new Code();
+        Code leftOverCharacters = (Code)this.clone();
 
         newGuess.stream().forEach((guessCharacter) -> {
-            do {
+            
+            if (!leftOverCharacters.isEmpty()) {
 
-                newCode.stream().forEach((codeCharacter) -> {
-                    do {
-                        if (guessCharacter == codeCharacter) {
-                            resultList.add(new CodeNode(CodeNode.X, newCode.indexOf(codeCharacter)));
-                        } else if (newGuess.contains(codeCharacter)) {
-                            resultList.add(new CodeNode(CodeNode.O, newCode.indexOf(codeCharacter)));
-                        } else {
-                            resultList.add(new CodeNode(CodeNode.NONE, newCode.indexOf(codeCharacter)));
-                        }
-                    } while (newCode.remove(codeCharacter));//end do/while
-                }); //end foreach
+                if (guessCharacter.equals(get(newGuess.indexOf(guessCharacter)))) {
+                    resultList.add(new CodeNode(CodeNode.X, newGuess.indexOf(guessCharacter)));
+                    leftOverCharacters.remove(guessCharacter);
+                } else if (leftOverCharacters.contains(guessCharacter)) {
+                    resultList.add(new CodeNode(CodeNode.O, indexOf(newGuess.indexOf(guessCharacter))));
+                    leftOverCharacters.remove(guessCharacter);
+                } else {
+                    resultList.add(new CodeNode(CodeNode.NONE, newGuess.indexOf(guessCharacter)));
+                    leftOverCharacters.remove(guessCharacter);
+                }//end if/else if/else
 
-            } while (newGuess.remove(guessCharacter));//end do/while
+            }//end if
+         
         }); //end foreach
-        
+
         return resultList;
     }//end getClues()
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         String outputString = new String();
-        
-        for(CodeNode currentCharacter : this){
-            outputString.concat(Character.toString(currentCharacter.getCharacter()));
+
+        for (CodeNode currentCharacter : this) {
+            outputString = outputString.concat(String.valueOf(currentCharacter.getCharacter()));
         }
-        
+
         return outputString;
     }
 
