@@ -18,22 +18,23 @@ public class CodeBreaker {
     /**
      * @param args the command line arguments
      */
-    private static Character[] clues;
-    private static Character[] code;
-    private static Character[] answer;
+    private static Code clues;
+    private static Code code;
+    private static Code answer;
 
     public static void main(String[] args) {
         // TODO code application logic here
-        initializeArrays();
-        
+                
         System.out.println("Welcome to Code Breaker!");
         String alphabetString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random rand = new Random();
         char[] alphabetArray = alphabetString.toCharArray();
-
+        
+        code = new Code();
         for (int i = 0; i < 5; i++) {
-            code[i] = alphabetArray[rand.nextInt(36 + 1)];
+            code.add(new CodeNode(alphabetArray[rand.nextInt(36 + 1)], i));
         }//end for
+        
         System.out.println("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         System.out.println("Type 'quit' to exit and 'help' for instructions.");
 
@@ -60,79 +61,11 @@ public class CodeBreaker {
                 System.out.println("X = Correct character in the correct location.");
                 System.out.println("O = Correct character in incorrect location.");
                 System.out.println(". = Not a correct character.");
-            //todo: This doesn't work
-            } else if (input.equalsIgnoreCase(code.toString())) {
-                System.out.println("Good job! You've cracked the code!");
-                break;
             } else {
-
-                char[] tempAnswer = input.toUpperCase().toCharArray();
-                for(int i = 0; i < tempAnswer.length; i++){
-                    answer[i] = tempAnswer[i];
-                }
-
-                System.out.println("You've entered: " + new String(tempAnswer));
-
-                //fill in the rest of the char array
-                for (int i = answer.length; i < code.length; i++) {
-                    answer[i] = '.';
-                }
-                System.out.print("(Troubleshooting only)The code is: ");
-                for(int i = 0; i < code.length; i++){
-                    System.out.print(code[i]);
-                }
-
-                for (int i = 0; i < answer.length; i++) {
-
-                    //if it is a correct character in the correct spot
-                    if (answer[i] == code[i]) {
-                        clues[i] = 'X';
-                    //if this character is anywhere in the code
-                    } else if (code.toString().contains(answer[i])) {
-                        clues[i] = 'O';
-                    //if this character does not exist in code
-                    } else {
-                        clues[i] = '.';
-                        //todo 
-                    }//end if/else if/else
-
-                }//end for
-
-                System.out.println("Guess recieved, here are the clues:");
-
-                for (int i = 0; i < clues.length; i++) {
-                    System.out.print(clues[i]);
-
-                }
-                System.out.println();
-
-                Arrays.fill(clues, '*');
-
+                
+                
             }//end if/else if/esle if/else    
         }//end while
     }//end main
-
-    public static void initializeArrays() {
-        clues = new Character[5];
-        code = new Character[5];
-        answer = new Character[5];
-        
-        for(int i = 0; i < 5; i++){
-            clues[i] = '.';
-            code[i] = '*';
-            
-        }
-    }//end initializeClues
-    
-    public static boolean hasCorrectCharacters(char[] firstArray, char[] secondArray){
-        
-        
-        String firstString = new String(firstArray);
-        String secondString = new String(secondArray);
-        
-        
-        
-        
-    }
-
+   
 }//end CodeBreaker
