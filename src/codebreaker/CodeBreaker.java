@@ -23,20 +23,13 @@ public class CodeBreaker {
 
     public static void main(String[] args) {
         // TODO code application logic here
-                
+
         System.out.println("Welcome to Code Breaker!");
-        String alphabetString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        Random rand = new Random();
-        char[] alphabetArray = alphabetString.toCharArray();
         
-        code = new Code();
-        for (int i = 0; i < 5; i++) {
-            code.add(new CodeNode(alphabetArray[rand.nextInt(36)], i));
-        }//end for
-        
-        System.out.println("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         System.out.println("Type 'quit' to exit and 'help' for instructions.");
 
+        initializeCode();
+        
         Scanner consoleInput = new Scanner(System.in);
 
         boolean gameRunning = true;
@@ -60,24 +53,51 @@ public class CodeBreaker {
                 System.out.println("X = Correct character in the correct location.");
                 System.out.println("O = Correct character in incorrect location.");
                 System.out.println(". = Not a correct character.");
-            } else if(input.equalsIgnoreCase(code.toString())){
-              
-                System.out.println("Congradulations! You broke the code in " + numTry + " tries.");
+
+            } else if (input.equalsIgnoreCase("thereisnospoon")) {
+
+                System.out.println("The code is : " + code.toString());
+
+            } else if (input.equalsIgnoreCase("resetcode")) {
                 
+                initializeCode();
+                numTry = 0;
+                System.out.println("The code has been reset.");
+
+            } else if (input.equalsIgnoreCase(code.toString())) {
+
+                System.out.println("Congradulations! You broke the code in " + numTry + " tries.");
+                initializeCode();
+                numTry = 0;
+                System.out.println("The code has been reset.");
+
             } else {
                 answer = new Code(input.toUpperCase());
                 //for troubleshooting
                 System.out.println("The input is: " + answer);
                 //System.out.println("I see you're a developer in need of assistance; The code is: " + code);
-                                
+
                 clues = new Code();
-                clues = (Code)code.getClues(answer);
-                
+                clues = (Code) code.getClues(answer);
+
                 System.out.println("The clue is: " + clues);
-                
+
             }//end if/else if/esle if/else
             numTry++;
         }//end while
     }//end main
-   
+
+    public static void initializeCode() {
+
+        String alphabetString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        Random rand = new Random();
+        char[] alphabetArray = alphabetString.toCharArray();
+
+        code = new Code();
+        for (int i = 0; i < 5; i++) {
+            code.add(new CodeNode(alphabetArray[rand.nextInt(36)], i));
+        }//end for
+    }//end initializeCode()
+
 }//end CodeBreaker
