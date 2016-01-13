@@ -6,8 +6,6 @@
 package codebreaker;
 
 import java.util.ArrayList;
-import codebreaker.CodeNode;
-import java.util.Arrays;
 
 /**
  *
@@ -30,25 +28,27 @@ public class Code extends ArrayList<CodeNode> {
     public Code getClues(ArrayList<CodeNode> newGuess) {
 
         Code resultList = new Code();
-        Code leftOverCharacters = (Code)this.clone();
+        Code leftOverCharacters = (Code) this.clone();
 
         newGuess.stream().forEach((guessCharacter) -> {
+
+            //used for testing
+            //System.out.println("*********************");
+            //System.out.println("Guessed character = " +guessCharacter);
+            //System.out.println("Code character = " + get(guessCharacter.getIndex()));
+            //System.out.println("*********************");
             
-            if (!leftOverCharacters.isEmpty()) {
+            if (guessCharacter.equals(get(guessCharacter.getIndex()))) {
+                resultList.add(new CodeNode(CodeNode.X, newGuess.indexOf(guessCharacter)));
+                leftOverCharacters.remove(guessCharacter);
+            } else if (leftOverCharacters.contains(guessCharacter)) {
+                resultList.add(new CodeNode(CodeNode.O, indexOf(newGuess.indexOf(guessCharacter))));
+                leftOverCharacters.remove(guessCharacter);
+            } else {
+                resultList.add(new CodeNode(CodeNode.NONE, newGuess.indexOf(guessCharacter)));
+                leftOverCharacters.remove(guessCharacter);
+            }//end if/else if/else
 
-                if (guessCharacter.equals(get(newGuess.indexOf(guessCharacter)))) {
-                    resultList.add(new CodeNode(CodeNode.X, newGuess.indexOf(guessCharacter)));
-                    leftOverCharacters.remove(guessCharacter);
-                } else if (leftOverCharacters.contains(guessCharacter)) {
-                    resultList.add(new CodeNode(CodeNode.O, indexOf(newGuess.indexOf(guessCharacter))));
-                    leftOverCharacters.remove(guessCharacter);
-                } else {
-                    resultList.add(new CodeNode(CodeNode.NONE, newGuess.indexOf(guessCharacter)));
-                    leftOverCharacters.remove(guessCharacter);
-                }//end if/else if/else
-
-            }//end if
-         
         }); //end foreach
 
         return resultList;

@@ -25,11 +25,11 @@ public class CodeBreaker {
         // TODO code application logic here
 
         System.out.println("Welcome to Code Breaker!");
-        
+
         System.out.println("Type 'quit' to exit and 'help' for instructions.");
 
         initializeCode();
-        
+
         Scanner consoleInput = new Scanner(System.in);
 
         boolean gameRunning = true;
@@ -59,10 +59,16 @@ public class CodeBreaker {
                 System.out.println("The code is : " + code.toString());
 
             } else if (input.equalsIgnoreCase("resetcode")) {
-                
+
                 initializeCode();
                 numTry = 0;
                 System.out.println("The code has been reset.");
+
+            } else if (input.equalsIgnoreCase("allyourbasesarebelongtous")) {
+
+                System.out.println("Type in your own code now: ");
+
+                setCode(consoleInput.next().toUpperCase());
 
             } else if (input.equalsIgnoreCase(code.toString())) {
 
@@ -99,5 +105,14 @@ public class CodeBreaker {
             code.add(new CodeNode(alphabetArray[rand.nextInt(36)], i));
         }//end for
     }//end initializeCode()
+
+    public static void setCode(String newCode) {
+        char[] tempcode = newCode.toCharArray();
+
+        code = new Code();
+        for (int i = 0; i < 5; i++) {
+            code.add(new CodeNode(tempcode[i], i));
+        }
+    }
 
 }//end CodeBreaker

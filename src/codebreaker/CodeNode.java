@@ -51,6 +51,11 @@ public class CodeNode extends Object{
         return hash;
     }
     
+    @Override
+    public String toString(){
+        return assignedCharacter.toString();
+    }
+    
     
     
     
