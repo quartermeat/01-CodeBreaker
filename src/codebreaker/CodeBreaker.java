@@ -60,6 +60,7 @@ public class CodeBreaker {
                 System.out.println("X = Correct character in the correct location.");
                 System.out.println("O = Correct character in incorrect location.");
                 System.out.println(". = Not a correct character.");
+            //todo: This doesn't work
             } else if (input.equalsIgnoreCase(code.toString())) {
                 System.out.println("Good job! You've cracked the code!");
                 break;
@@ -76,7 +77,10 @@ public class CodeBreaker {
                 for (int i = answer.length; i < code.length; i++) {
                     answer[i] = '.';
                 }
-                System.out.println("(Troubleshooting only)The code is: " + new String())
+                System.out.print("(Troubleshooting only)The code is: ");
+                for(int i = 0; i < code.length; i++){
+                    System.out.print(code[i]);
+                }
 
                 for (int i = 0; i < answer.length; i++) {
 
@@ -84,7 +88,7 @@ public class CodeBreaker {
                     if (answer[i] == code[i]) {
                         clues[i] = 'X';
                     //if this character is anywhere in the code
-                    } else if (answer.toString().contains(String.valueOf(code[i]))) {
+                    } else if (code.toString().contains(answer[i])) {
                         clues[i] = 'O';
                     //if this character does not exist in code
                     } else {
@@ -119,5 +123,16 @@ public class CodeBreaker {
             
         }
     }//end initializeClues
+    
+    public static boolean hasCorrectCharacters(char[] firstArray, char[] secondArray){
+        
+        
+        String firstString = new String(firstArray);
+        String secondString = new String(secondArray);
+        
+        
+        
+        
+    }
 
 }//end CodeBreaker
