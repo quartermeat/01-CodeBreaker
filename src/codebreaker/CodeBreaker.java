@@ -46,7 +46,7 @@ public class CodeBreaker {
                 break;
             } else if (input.equalsIgnoreCase("help")) {
                 System.out.println("Enter 'quit' to exit or 'help' for instructions.");
-                System.out.println("Enter a five character guess to what the code word maybe. The code is randomly made up of"
+                System.out.println("Enter a five character guess to what the code maybe. The code is randomly made up of"
                         + " the letters of the alphabet and the 10 single digit numbers including 0");
                 System.out.println("The game will then let you know what characters are correctly guessed in the wrong spot,"
                         + " and what characters were guessed correctly in the correct spot.");
