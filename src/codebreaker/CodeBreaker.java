@@ -5,7 +5,6 @@
  */
 package codebreaker;
 
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -28,7 +27,8 @@ public class CodeBreaker {
 
         System.out.println("Type 'quit' to exit and 'help' for instructions.");
 
-        initializeCode();
+        code = new Code();
+        code.initialize();
 
         Scanner consoleInput = new Scanner(System.in);
 
@@ -60,7 +60,7 @@ public class CodeBreaker {
 
             } else if (input.equalsIgnoreCase("resetcode")) {
 
-                initializeCode();
+                code.initialize();
                 numTry = 0;
                 System.out.println("The code has been reset.");
 
@@ -68,12 +68,12 @@ public class CodeBreaker {
 
                 System.out.println("Type in your own code now: ");
 
-                setCode(consoleInput.next().toUpperCase());
+                code.setCode(consoleInput.next().toUpperCase());
 
             } else if (input.equalsIgnoreCase(code.toString())) {
 
-                System.out.println("Congradulations! You broke the code in " + numTry + " tries.");
-                initializeCode();
+                System.out.println("Congratulations! You broke the code in " + numTry + " tries.");
+                code.initialize();
                 numTry = 0;
                 System.out.println("The code has been reset.");
 
@@ -81,8 +81,7 @@ public class CodeBreaker {
                 answer = new Code(input.toUpperCase());
                 //for troubleshooting
                 System.out.println("The input is: " + answer);
-                //System.out.println("I see you're a developer in need of assistance; The code is: " + code);
-
+                
                 clues = new Code();
                 clues = (Code) code.getClues(answer);
 
@@ -93,26 +92,7 @@ public class CodeBreaker {
         }//end while
     }//end main
 
-    public static void initializeCode() {
+    
 
-        String alphabetString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        Random rand = new Random();
-        char[] alphabetArray = alphabetString.toCharArray();
-
-        code = new Code();
-        for (int i = 0; i < 5; i++) {
-            code.add(new CodeNode(alphabetArray[rand.nextInt(36)], i));
-        }//end for
-    }//end initializeCode()
-
-    public static void setCode(String newCode) {
-        char[] tempcode = newCode.toCharArray();
-
-        code = new Code();
-        for (int i = 0; i < 5; i++) {
-            code.add(new CodeNode(tempcode[i], i));
-        }
-    }
 
 }//end CodeBreaker

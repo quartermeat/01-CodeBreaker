@@ -6,6 +6,7 @@
 package codebreaker;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -13,15 +14,28 @@ import java.util.ArrayList;
  */
 public class Code extends ArrayList<CodeNode> {
 
+    private int size;
+        
     public Code() {
         super();
+        size = 4;
     }
 
     public Code(String newCode) {
         super();
+        
         char[] newCharArray = newCode.toCharArray();
-        for (int i = 0; i < newCharArray.length; i++) {
+        size = newCharArray.length;
+        for (int i = 0; i < size; i++) {
             add(new CodeNode(newCharArray[i], i));
+        }
+    }
+    
+    public Code(char[] newCode){
+        super();
+        size = newCode.length;
+        for (int i = 0; i < size; i++) {
+            add(new CodeNode(newCode[i], i));
         }
     }
 
@@ -64,5 +78,25 @@ public class Code extends ArrayList<CodeNode> {
 
         return outputString;
     }
+    
+    public void setCode(String newCode) {
+        char[] tempcode = newCode.toCharArray();
+
+        for (int i = 0; i < size; i++) {
+            add(new CodeNode(tempcode[i], i));
+        }
+    }
+    
+    public void initialize() {
+
+        String alphabetString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        Random rand = new Random();
+        char[] alphabetArray = alphabetString.toCharArray();
+
+        for (int i = 0; i < size; i++) {
+            add(new CodeNode(alphabetArray[rand.nextInt(36)], i));
+        }//end for
+    }//end initializeCode()
 
 }
